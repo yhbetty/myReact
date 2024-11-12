@@ -1,61 +1,69 @@
-function Component() {
-  return <h1>React</h1>
-}
-
 function App() {
+  // 建立物件變數
 
-  // 建立陣列(可以是任何形式資料=>元件)
-  // 同一個陣列中，key屬性的質不可重複
-  const listItem = [
-    <Component key="0" />,
-    <Component key="1" />,
-    <Component key="2" />,
-  ]
+  // const person = {
+  //   s1: {
+  //     name: "王小明",
+  //     age: 10,
+  //   },
+  //   s2: {
+  //     name: "王中明",
+  //     age: 11,
+  //   },
+  //   s3: {
+  //     name: "王大明",
+  //     age: 12,
+  //   },
+  // }
 
-  const listBooks = [
-    { bookName: 'HTML', id: 'book1' },
-    { bookName: 'CSS', id: 'book2' },
-    { bookName: 'JavaScript', id: 'book3' },
-  ]
+  /* 多筆資料的物件解構方法1：一般寫法 */
+  // const { s1, s2, s3 } = person;
 
-  //過濾出陣列中除了CSS的書本
-  const filterBooks = listBooks.filter((book)=>{
-    // if判斷式
-    // if(book.bookName !=='CSS'){
-    //   return true
-    // }
+  /* 多筆資料的物件解構方法2：解構+展開... (其餘運算子)*/
+  //解構s1，展開s2,s3
+  // const { s1, ...other } = person;
+  
+  const person = {
+    name: "王小明",
+    age: 10,
+  }
 
-    // 三元運算子的判斷式
-    // 判斷式？條件成立：條件不成立
-    return book.bookName !=='CSS'?true:false
-    
-  })
+  //一般寫法
+  // function showName(obj){
+  // console.log(obj);
+  // console.log(obj.name);
+  // console.log(obj.age);
+  // }
+
+
+//將物件解構
+
+
+
+
+
+
+
+
+  showName(person);
 
   return (
+    //   <>
+    // <div>{`同學1姓名:${s1.name}`}</div>
+    // <div>{`同學3姓名:${other.s3.name}`}</div>
 
-    <>
-      {/* 使用陣列方法1 */}
-      {listItem}
+    {/* 
+      <div>第一位同學姓名：{s1.name}</div>
+      <div>第一位同學年齡：{s1.age}歲</div>
       <hr />
-      
-      {/* 使用陣列方法2 =>map() =>此方法可以把一個陣列轉換為另一個陣列 */}
-
-      {
-        listBooks.map((book) => {
-          return <div key={book.id}>{book.bookName}</div>
-        })
-      }
-      <hr/>
-      
-      {/* 顯示filter()過濾後的陣列資料 */}
-      {
-        filterBooks.map((book)=>{
-          return <div key={book.id}>{book.bookName}</div>
-        })
-      }
-
+      <div>第二位同學姓名：{s2.name}</div>
+      <div>第二位同學年齡：{s2.age}歲</div>
+      <hr />
+      <div>第三位同學姓名：{s3.name}</div>
+      <div>第三位同學年齡：{s3.age}歲</div>
+      <hr />
+       */}
     </>
   )
 }
-
 export default App
