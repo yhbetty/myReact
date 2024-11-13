@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header img {
+  width: 100%;
+}
+
+.mainF .MF {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.mainF .feature {
+  /* border: 1px solid red; */
+  width: 300px;
+}
+
+.mainF h2 {
+  color: red;
+}
+
+.mainF p {
+  color: gray;
+  line-height: 1.5;
+}
+
+.slogan {
+  background-color: red;
+  color: white;
+  font-size: large;
+  line-height: 100px;
+  text-align: center;
+  width: 100%;
+}
+
+.title h2 {
+  color: green;
+  text-align: center;
+  font-size: xx-large;
+  margin: 50px;
+}
+
+#course {
+  display: flex;
+  width: 60%;
+  justify-content: space-around;
+  margin: 50px auto;
+}
+
+
+#course .class1 {
+  width: 300px;
+  box-shadow: 0 0 10px #ccc;
+  padding: 10px;
+}
+
+#course .class2 {
+  width: 300px;
+  box-shadow: 0 0 10px #ccc;
+  padding: 10px;
+}
+
+#course .class3 {
+  width: 300px;
+  box-shadow: 0 0 10px #ccc;
+  padding: 10px;
+}
+
+#course img {
+  width: 100%;
+}
+
+#course .CT {
+  font-size: x-large;
+}
+
+#course .classTitle {
+  color: #00b3ff;
+  font-size: 16px;
+}
+
+#course .span1 {
+  color: #666;
+  text-decoration: line-through;
+}
+
+#course .span2 {
+  color: red;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+#course button {
+  background-color: red;
+  color: white;
+  border: none;
+  width: 100%;
+  line-height: 40px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+#course .TN {
+  color: gray;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  width: 100%;
+}
