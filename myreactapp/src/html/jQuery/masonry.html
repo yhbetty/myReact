@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            margin: auto;
+        }
+
+        .box {
+            width: 300px;
+            text-align: center;
+            margin: 5px;
+            background-color:bisque;
+        }
+
+        .box img {
+            width: 100%;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="box">
+            <img src="./images/1.jpg" alt="">
+            <p>dog1</p>
+        </div>
+        <div class="box">
+            <img src="./images/7.jpg" alt="">
+            <p>dog2</p>
+        </div>
+        <div class="box">
+            <img src="./images/2.jpg" alt="">
+            <p>dog3</p>
+        </div>
+        <div class="box">
+            <img src="./images/4.jpg" alt="">
+            <p>dog4</p>
+        </div>
+        <div class="box">
+            <img src="./images/8.jpg" alt="">
+            <p>dog5</p>
+        </div>
+        <div class="box">
+            <img src="./images/3.jpg" alt="">
+            <p>dog6</p>
+        </div>
+        <div class="box">
+            <img src="./images/5.jpg" alt="">
+            <p>dog7</p>
+        </div>
+        <div class="box">
+            <img src="./images/6.jpg" alt="">
+            <p>dog8</p>
+        </div>
+    </div>
+
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <script src="./js/imagesloaded.pkgd.min.js"></script>
+    <script src="./js/masonry.pkgd.min.js"></script>
+    <script>
+        $(function () {
+            $('#container').imagesLoaded(function () {
+                $('#container').masonry({
+                    // 左右留白，頁面置中
+                    // 搭配最外層的container => margin:auto;
+                    isFitWidth:true
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

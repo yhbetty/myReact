@@ -1,19 +1,12 @@
-import { Route, Routes } from "react-router-dom";
-import Navbar from "./component/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import News from "./pages/News";
+import $ from 'jquery'
 
 export default function App() {
     return (
-        <div className="wrap">
-            <Navbar />
-            <hr />
-            <Routes>
-                <Route path="/" element={<Home/>}></Route>
-                <Route path="/about" element={<About/>}></Route>
-                <Route path="/news" element={<News/>}></Route>
-            </Routes>
+        <div>
+            <h2>jquery</h2>
+            <button onClick={() => {
+                console.log($('h2').text())
+            }}>click</button>
         </div>
     )
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    img {
+        width: 450px;
+        height: 600px;
+    }
+
+    .box {
+        width: 450px;
+        height: 600px;
+        position: relative;
+    }
+
+    /* 輪播導覽列 */
+    #nav {
+        position: absolute;
+        z-index: 10;
+        right: 10px;
+        bottom: 10px;
+
+        a {
+            color: transparent;
+            font-size: 15px;
+            text-decoration: none;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            display: inline-block;
+            /* 轉成區塊元素並水平排列(原本為行內元素) */
+            text-align: center;
+            background-color: bisque;
+            /* color: transparent; */
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+    }
+
+    #nav a.activeSlide {
+        background-color: rgb(117, 204, 207);
+    }
+
+    .mask{
+        width: 100%;
+        height: 45px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 9;
+        background-color: rgba(0,0,0,.45);
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div id="imgCycle">
+            <img src="./images/1.jpg" alt="">
+            <img src="./images/2.jpg" alt="">
+            <img src="./images/3.jpg" alt="">
+            <img src="./images/4.jpg" alt="">
+            <img src="./images/5.jpg" alt="">
+            <img src="./images/6.jpg" alt="">
+        </div>
+        <div class="mask"></div>
+    </div>
+    <!-- <nav>輪播鈕導覽列</nav> -->
+
+    <!-- 1.載入JQ主程式 -->
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <!-- 2.載入輪播的主程式 -->
+    <script src="./js/jquery.cycle.all.js"></script>
+    <!-- 3.撰寫自己的jQuery -->
+    <Script>
+        $(function () {
+            // 預設為淡入淡出
+            $('#imgCycle').after('<div id="nav"></div>').cycle({
+                fx: 'fade',    // 輪播方式
+                sync: false,   // 有無前一張的殘影
+                delay: -2000,  // 第一次第一張圖停留時間
+                timeout: 2000, // 輪播時間
+                pager: '#nav'   // 生成輪播數字
+            });
+        })
+    </Script>
+</body>
+
+</html>
