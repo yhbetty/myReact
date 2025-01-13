@@ -1,98 +1,128 @@
-<<<<<<< HEAD
-import { useState } from "react";
+import axios from "axios";
+import { div } from "motion/react-client";
+import { useEffect, useRef, useState } from "react";
 
 export default function App() {
+    // 驗證是否連上unsplash api
+    // https://api.unsplash.com/search/photos/?client_id=自己的accessKey
+    // https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
 
-    const [search, setSearch] = useState('');
+    const api = 'https://api.unsplash.com/search/photos';
+    const accessKey = 'ITG1aVBn27Xg0V6LscbzzmErWw5grVAokm33ERuKDhY';
+    const [filterString, setFilterString] = useState('dog');
+    // 建立列表用的陣列
+    const [jsonData, setJsonData] = useState([]);
+    // 讀取變數
+    const isLoading = useRef(false);
+    // 頁數
+    const currentPage = useRef(1);
 
-    // 使用表單送出
-    const formHandleSubmit = (e) => {
-        e.preventDefault();
-        console.log('使用form submit送出:', search);
-    }
+    // 建立非同步方法，取得遠端資料
+    const getPhotos = async (page = 1, isNew = ture) => {
+        try {
+            isLoading.current = true;
+            // console.log(`${api}?client_id=${accessKey}&query=${filterString}`);
+            // 發出請求給遠端api，傳回結果
+            const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}`);
+            // 全部資料
+            // console.log(result);
+            // 顯示10筆記錄
+            console.log(result.data.results);
 
-    // 使用鍵盤事件 => Enter送出
-    const enterHandleSubmit = (e) => {
-        // console.dir(e);
-        if (e.key === 'Enter') {
-            console.log('使用Enter送出:', search)
+            // 更新陣列列表資料(只會保存當前頁的資料)
+            // setJsonData(result.data.results);
+
+            // 若要保存不同頁的資料，就要加上...展開語法
+            setJsonData((preData) => {
+                // 是否為新的關鍵字，若為新的關鍵字，則覆蓋目前的關鍵字結果
+                if (isNew) {
+                    return [...result.data.results];
+                }
+                // 保持先前的資料+當前的資料
+                return [...preData, ...result.data.results];
+            });
+
+            //  更新頁數
+            currentPage.current = page;
+
+            // 1秒後取消寫入
+            setTimeout(() => {
+                isLoading.current = false;
+            }, 1000);
+
+        } catch (error) {
+            // 錯誤發生時，顯示訊息
+            console.log(error);
         }
     }
 
-    return (
-        <>
-            <div>
-                {/* 使用表單送出方式：適用於單一欄位 */}
-                <form onSubmit={formHandleSubmit}>
-                    {/* 搜尋1 */}
-                    <div>
-                        <label htmlFor="search1">搜尋1</label>
-                        <input type="search" id="search1" name="mySearch"
-                            value={search} onChange={(e) => setSearch(e.target.value)} />
+    // 列表高度
+    const listRef = useRef(null);
+    // 避免重新渲染，所有寫在useEffect中
+    useEffect(() => {
+        getPhotos(1, true);
+        // 滾動監聽函式
+        const scrollEvent = () => {
+            // console.dir(listRef.current);
+            // 取得目前圖片列表的高度
+            const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
+            //
+            if (!isLoading.current && window.scrollY >= height) {
+                // 頁數+1
+                currentPage.current++;
+                // 同一個關鍵字的資料不用覆蓋‧所以補上false
+                getPhotos(currentPage.current, false);
+            }
+        }
+        // 滾動監聽
+        window.addEventListener('scroll', scrollEvent);
+        // 移除監聽
+        return () => window.removeEventListener('scroll', scrollEvent);
+    }, [filterString]);
+
+    // 建立顯示圖片元件
+    const ShowPhoto = () => {
+        return (
+            jsonData.map((item, index) => {
+                return (
+                    <div key={index}>
+                        <img src={item.urls.regular} alt="" width="400" height="320" style={{ objectFit: "cover" }} />
                     </div>
-                </form>
+                )
+            })
+        )
+    }
 
-
-                {/* 搜尋2：不使用表單送出*/}
-                <div>
-                    <label htmlFor="search2">搜尋2</label>
-                    <input type="search" id="search2" name="mySearch2"
-                        value={search} onChange={(e) => setSearch(e.target.value)}
-                        onKeyDown={enterHandleSubmit}
-                    />
-                </div>
-            </div>
-
-=======
-import { createContext, useContext,useState } from "react";
-
-export default function App() {
-    // 建立共用環境區域
-    const UserContext = createContext({});
-    const [username, setUsername] = useState('');
-    // 建立登入元件
-    const LoginForm = () => {
-        // 因為要被放在共用區，所以要放在App元件內
-        // const [username, setUsername] = useState('');
-        // 從共用區UserContext解構出username, setUsername
-        // const{username, setUserName}=useContext(UserContent)
+    // 建立搜尋列元件
+    const SearchBox = ({ onSearchHandler, filterString }) => {
         return (
-            <>
-                <label htmlFor="username">使用者名稱</label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="請輸入使用者名稱"
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
+            <div style={{
+                textAlign: "center",
+                margin: "50px 0"
+            }}
+            >
+                <label htmlFor="filter">請輸入搜尋文字</label>
+                <input type="text" id="filter"
+                    defaultValue={filterString}
+                    onKeyUp={onSearchHandler}
                 />
-                <button type="button">登入</button>
-            </>
-        )
-
-    }
-
-    // 登入後的歡迎元件
-    const Greeting = () => {
-        // 從共用區取得username
-        const {username}=useContext(UserContext);
-        return (
-            <div>
-                Hi,{username}
             </div>
         )
     }
 
-
+    // 按下Enter鍵時，更改filterString資料的函式
+    const onSearchHandler = (e) => {
+        if (e.key === 'Enter') {
+            setFilterString(e.target.value);
+        }
+    }
+    // 渲染時使用JSX語法，若要使用JS語法，前後加{}
     return (
         <>
-            <h1>useContent</h1><hr style={{ marginBottom: "50px" }} />
-            <UserContext.Provider value={{username,setUsername}}>
-                <LoginForm />
-                <br />
-                <Greeting />
-            </UserContext.Provider>
->>>>>>> 18eb6cae13281795f8655feb4354a1094d2ecd3b
+            <SearchBox onSearchHandler={onSearchHandler} filterString={filterString} />
+            <div style={{ display: "flex", flexWrap: "wrap" }} ref={listRef}>
+                <ShowPhoto />
+            </div>
         </>
     )
 }
